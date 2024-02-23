@@ -26,8 +26,13 @@ app.use("/conversations", conversationRoutes);
 app.use("/webhook", webHookRouter);
 
 //database connection
-connectDb();
+// connectDb();
 
-app.listen(PORT, () => {
-  console.log("Listening on port " + PORT);
-});
+// app.listen(PORT, () => {
+//   console.log("Listening on port " + PORT);
+// });
+connectDb().then(() => {
+  app.listen(PORT, () => {
+      console.log("listening for requests");
+  })
+})
