@@ -29,7 +29,7 @@ app.use("/user", userRoutes);
 app.use("/userFacebook", userFacebook);
 app.use("/pages", pagesRouter);
 app.use("/conversations", conversationRoutes);
-app.use("/webhook", webHookRouter);
+app.use("/", webHookRouter);
 
 //database connection
 // connectDb();
