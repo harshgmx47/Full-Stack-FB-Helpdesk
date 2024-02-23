@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 
-app.get("/messaging-webhook", (req, res) => {
+router.get("/messaging-webhook", (req, res) => {
   const VERIFY_TOKEN = process.env.WEBHOOK_VERIFY_TOKEN;
 
   // Parse the query params
