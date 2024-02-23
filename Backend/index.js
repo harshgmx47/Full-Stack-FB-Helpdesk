@@ -12,7 +12,13 @@ const connectDb = require("./database/");
 const cors = require("cors");
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(
+  {
+    origin: ["https://hilarious-hen-fatigues.cyclic.app/"],
+    methods: ["POST","GET","DELETE"],
+    credentials:true
+}
+));
 
 app.get("/", (req, res) => {
   res.send("test");
