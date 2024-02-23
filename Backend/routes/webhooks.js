@@ -46,7 +46,7 @@ router.get("/", (req, res) => {
 });
 
 // POST / - Facebook webhook callback endpoint
-router.post("/", (req, res) => {
+router.post("/webhook", (req, res) => {
   let body = req.body;
 
   if (body.object === "page") {

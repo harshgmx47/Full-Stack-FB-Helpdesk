@@ -14,7 +14,7 @@ const cors = require("cors");
 app.use(bodyParser.json());
 app.use(cors(
   {
-    origin: ["https://hilarious-hen-fatigues.cyclic.app/"],
+    origin: ["https://full-stack-fb-helpdesk.onrender.com/"],
     methods: ["POST","GET","DELETE"],
     credentials:true
 }
