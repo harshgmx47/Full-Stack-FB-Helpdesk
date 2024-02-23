@@ -12,13 +12,7 @@ const connectDb = require("./database/");
 const cors = require("cors");
 
 app.use(bodyParser.json());
-app.use(cors(
-  {
-    origin: ["https://full-stack-fb-helpdesk.onrender.com/"],
-    methods: ["POST","GET","DELETE"],
-    credentials:true
-}
-));
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("test");
