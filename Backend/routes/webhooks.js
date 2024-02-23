@@ -12,7 +12,8 @@ router.get("/", async (req, res) => {
 
   if (mode && token) {
     if (mode === "subscribe" && token === VERIFY_TOKEN) {
-      res.status(200).send(challenge);
+      // const challenge = req.query['hub.challenge'];
+      res.send(challenge)
     } else {
       res.sendStatus(403).send("failed to subscribe");
     }
