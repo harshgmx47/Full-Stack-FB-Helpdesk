@@ -1,28 +1,26 @@
-+-------------------+          +-------------------+          +-------------------+          +-------------------+
-| User Registration |------>| Successful Login? |------>| No                  |------>| Login Again         |
-+-------------------+          +-------------------+          +-------------------+          +-------------------+
-                                  |
-                                  | Yes
-                                  v
-+-------------------+          +-------------------+          +-------------------+
-| Connect Facebook |------>| Facebook Verified? |------>| No                  |------>| Try Again          |
-+-------------------+          +-------------------+          +-------------------+          +-------------------+
-                                  |
-                                  | Yes
-                                  v
-+-------------------+          +-------------------+          +-------------------+          +-------------------+
-| Fetch Facebook    |------>| Facebook Pages    |------>| Display Pages        |------>| User Interaction   |
-| Pages             |          +-------------------+          +-------------------+          +-------------------+
-+-------------------+                                                  |
-                                                                          v
-+-------------------+          +-------------------+          +-------------------+          +-------------------+
-| Facebook         |------>| New Message        |------>| Process Message      |------>| Update Conversation |
-| Webhook Events   |          +-------------------+          +-------------------+          +-------------------+
-+-------------------+                                                  |
-                                                                          v
-+-------------------+          +-------------------+          +-------------------+          +-------------------+
-| Fetch            |------>| Conversations      |------>| Display Conversations |------>| Send Message        |
-| Conversations    |          +-------------------+          +-------------------+          +-------------------+
+```mermaid
+graph LR
+A[User Registration/Login] --> B{Successful?}
+B --> C{Connect Facebook Account}
+C --> D{Facebook Verified?}
+D --> E{Long-Lived Token}
+E --> F{Fetch Pages}
+
+subgraph Conversations & Messages
+    F --> G{Facebook Webhook Events}
+    G --> H{Process Webhook}
+    H --> I{Save Messages to DB}
+    I --> J{Update Conversations}
+    J --> K{Fetch Conversations}
+    K --> L{Display Conversations}
+    L --> M{View Messages}
+    M --> N{Send Message}
+    N --> J
+    N --> O{Send via Facebook Graph API}
+end
+
+F --> K
+
 +-------------------+
 
 **Explanation:**
