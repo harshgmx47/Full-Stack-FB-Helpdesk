@@ -12,11 +12,11 @@ const UserDetails = ({ name }) => {
         <span className="status">• Offline</span>
         <div className="contact">
           <div className="call">
-            <span class="material-symbols-outlined">call</span>
+            <span className="material-symbols-outlined">call</span>
             <p>Call</p>
           </div>
           <div className="profile">
-            <span class="material-symbols-outlined">account_circle</span>
+            <span className="material-symbols-outlined">account_circle</span>
             <p>Profile</p>
           </div>
         </div>

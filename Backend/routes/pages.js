@@ -1,8 +1,21 @@
 const express = require("express");
 const axios = require("axios"); // Make sure axios is imported
+const WebSocket = require("ws");
+
 const router = express.Router();
 const { Page, Conversation, Message } = require("../model");
 const authenticateUser = require("../middleware/auth");
+
+// WebSocket setup
+const wss = new WebSocket.Server({ noServer: true });
+// Handle WebSocket connections
+wss.on("connection", (ws) => {
+  console.log("Client connected");
+
+  ws.on("close", () => {
+    console.log("Client disconnected");
+  });
+});
 
 // Connect to the page and fetch conversations
 router.get("/:pageId/conversations", authenticateUser, async (req, res) => {

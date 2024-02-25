@@ -269,7 +269,7 @@ const Messenger = () => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
 
-  const currentUserId = "186383267901490"; // Replace with the actual current user ID
+  const currentUserId = "122094841628231937"; // Replace with the actual current user ID
 
   return (
     <section className="messengerSec">
@@ -345,7 +345,7 @@ const Messenger = () => {
         {userDetails ? (
           <>
             <UserDetails name={selectedConversation.initiatorName} />
-            <p>User Type: {userDetails.userType}</p> {/* Display user type */}
+            
           </>
         ) : (
           <div className="no-details">No Details</div>

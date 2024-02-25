@@ -64,6 +64,7 @@ const Integration = () => {
         console.log(response);
         if (response.authResponse) {
           console.log("Welcome! Fetching your information....");
+          console.log(response.authResponse)
           setFetchedUserInfo({
             userFacebookId: response.authResponse.userID,
             accessToken: response.authResponse.accessToken,
@@ -80,6 +81,7 @@ const Integration = () => {
   };
 
   const fetchUserInfo = async () => {
+    console.log(fetchedUserInfo.userFacebookId)
     if (fetchedUserInfo.userFacebookId && fetchedUserInfo.accessToken) {
       try {
         const response = await axios.post(
@@ -104,7 +106,7 @@ const Integration = () => {
     }
   };
 
-  //   console.log(fetchedUserInfo);
+    console.log(fetchedUserInfo);
   return (
     <section className="integrationSec">
       <p>Facebook Integration Page</p>
