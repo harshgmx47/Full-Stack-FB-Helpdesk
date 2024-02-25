@@ -1,5 +1,5 @@
 ```mermaid
-graph LR
+graph TD
 A[User Registration/Login] --> B{Successful?}
 B --> C{Connect Facebook Account}
 C --> D{Facebook Verified?}
@@ -18,9 +18,9 @@ subgraph Conversations & Messages
     N --> J
     N --> O{Send via Facebook Graph API}
 end
-```
 
 F --> K
+```
 
 +-------------------+
 
