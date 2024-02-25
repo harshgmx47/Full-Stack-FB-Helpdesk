@@ -33,6 +33,6 @@ app.use("/", webHookRouter);
 // });
 connectDb().then(() => {
   app.listen(PORT, () => {
-      console.log("listening for requests");
+    console.log("Listening on port " + PORT);
   })
 })

@@ -29,7 +29,7 @@ router.get("/messaging-webhook", (req, res) => {
 });
 
 // GET / - Facebook webhook subscription endpoint
-router.get("/", (req, res) => {
+router.get("/webhook", (req, res) => {
   // Your verify token. Should be a random string.
   const VERIFY_TOKEN = process.env.WEBHOOK_VERIFY_TOKEN;
 
