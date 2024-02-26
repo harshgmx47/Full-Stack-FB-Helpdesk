@@ -70,8 +70,11 @@ const Pages = () => {
         </>
       ) : (
         <>
+        <center>
+          <h2>Facebook Page Integration</h2>
+        </center>
           <h2>
-            Integrated Page - <span>{selectedPage.pageName}</span>
+            Integrated Page : <span>{selectedPage.pageName}</span>
           </h2>
           <button className="deleteBtn"
            onClick={() => handleDeleteIntegration(selectedPage.pageId)

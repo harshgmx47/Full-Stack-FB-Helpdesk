@@ -76,7 +76,7 @@ router.get("/:pageId/conversations", authenticateUser, async (req, res) => {
 // Function to fetch conversations from the Facebook Graph API
 async function fetchConversations(pageAccessToken, pageId) {
   try {
-    const pageConversationsUrl = `https://graph.facebook.com/v12.0/${pageId}/conversations?fields=participants,messages.limit(1){message,from,created_time}&access_token=${pageAccessToken}`;
+    const pageConversationsUrl = `https://graph.facebook.com/v19.0/${pageId}/conversations?fields=participants,messages.limit(1){message,from,created_time}&access_token=${pageAccessToken}`;
     const response = await axios.get(pageConversationsUrl);
 
     const conversations = response.data.data.map((conv) => {
@@ -123,7 +123,7 @@ async function fetchAndStoreMessages(pageAccessToken, fbConversationId,pageId) {
       return;
     }
 
-    const messagesUrl = `https://graph.facebook.com/v12.0/${fbConversationId}/messages?access_token=${pageAccessToken}&fields=id,message,from,created_time`;
+    const messagesUrl = `https://graph.facebook.com/v19.0/${fbConversationId}/messages?access_token=${pageAccessToken}&fields=id,message,from,created_time`;
     const response = await axios.get(messagesUrl);
     const messages = response.data.data;
 

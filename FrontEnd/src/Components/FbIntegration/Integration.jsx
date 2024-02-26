@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { BASE_URL, APP_ID } from "../../config";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUser } from './UserContext'; // Import useUser hook
+
 import "./inte.css";
 
 const Integration = () => {
   const navigate = useNavigate();
-  const [fetchedUserInfo, setFetchedUserInfo] = useState({
-    userFacebookId: "",
-    accessToken: "",
-  });
+  const { fetchedUserInfo, setFetchedUserInfo } = useUser(); // Use the useUser hook
 
   //loading facebook sdk
   useEffect(() => {
@@ -48,10 +47,11 @@ const Integration = () => {
     await FB.getLoginStatus(function (response) {
       if (response.status === "connected") {
         console.log("You are already logged in and authenticated");
-        setFetchedUserInfo({
+        setFetchedUserInfo(prevState => ({
+          ...prevState,
           userFacebookId: response.authResponse.userID,
           accessToken: response.authResponse.accessToken,
-        });
+        }));
       } else {
         promptLogin();
       }
@@ -65,17 +65,18 @@ const Integration = () => {
         if (response.authResponse) {
           console.log("Welcome! Fetching your information....");
           console.log(response.authResponse)
-          setFetchedUserInfo({
+          setFetchedUserInfo(prevState => ({
+            ...prevState,
             userFacebookId: response.authResponse.userID,
             accessToken: response.authResponse.accessToken,
-          });
+          }));
         } else {
           console.log("User cancelled login or did not fully authorize.");
         }
       },
       {
         scope:
-          "email,pages_show_list,pages_read_engagement,pages_manage_posts,pages_manage_engagement,pages_messaging,pages_manage_metadata",
+          "public_profile,email,pages_show_list,pages_read_engagement,pages_manage_posts,pages_manage_engagement,pages_messaging,pages_manage_metadata",
       }
     );
   };
