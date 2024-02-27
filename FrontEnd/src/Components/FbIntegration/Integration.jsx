@@ -36,46 +36,31 @@ const Integration = () => {
   //   })(document, "script", "facebook-jssdk");
   // }, []);
   useEffect(() => {
-    // Function to load Facebook SDK
-    const loadFacebookSDK = () => {
-        if (document.getElementById("facebook-jssdk")) return;
-
+    // Check if the Facebook SDK script tag already exists
+    if (!document.getElementById("facebook-jssdk")) {
+        // Create a new script element
         const script = document.createElement("script");
+        // Set the necessary attributes
         script.id = "facebook-jssdk";
         script.src = "https://connect.facebook.net/en_US/sdk.js";
         script.async = true;
-        script.onload = () => {
-            window.fbAsyncInit = function () {
-                FB.init({
-                    appId: APP_ID,
-                    cookie: true,
-                    xfbml: true,
-                    version: "v16.0",
-                });
+        script.defer = true;
+        script.crossorigin = "anonymous";
 
-                FB.AppEvents.logPageView();
-            };
-        };
-
+        // Append the script element to the document head
         document.head.appendChild(script);
-    };
-
-    // Check if the window is already loaded
-    if (document.readyState === 'complete') {
-        loadFacebookSDK();
-    } else {
-        // If window is not loaded, wait for it to be fully loaded
-        window.onload = loadFacebookSDK;
     }
 
     return () => {
-        // Cleanup if necessary
+        // Cleanup function to remove the script tag when the component unmounts
         const scriptElement = document.getElementById("facebook-jssdk");
         if (scriptElement) {
-            scriptElement.remove();
+            document.head.removeChild(scriptElement);
         }
     };
-}, []);
+}, []); // Empty dependency array ensures the effect runs only once after initial mount
+
+
 
 
   useEffect(() => {
