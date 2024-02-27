@@ -46,6 +46,19 @@ const Integration = () => {
         script.async = true;
         script.defer = true;
         script.crossorigin = "anonymous";
+        script.onload = () => {
+          window.fbAsyncInit = function () {
+              FB.init({
+                  appId: APP_ID,
+                  cookie: true,
+                  xfbml: true,
+                  version: "v19.0",
+              });
+
+              FB.AppEvents.logPageView();
+          };
+      };
+
 
         // Append the script element to the document head
         document.head.appendChild(script);
