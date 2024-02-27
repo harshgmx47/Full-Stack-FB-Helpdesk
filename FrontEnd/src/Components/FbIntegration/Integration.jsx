@@ -36,33 +36,47 @@ const Integration = () => {
   //   })(document, "script", "facebook-jssdk");
   // }, []);
   useEffect(() => {
-    if (document.getElementById("facebook-jssdk")) return;
-  
-    const script = document.createElement("script");
-    script.id = "facebook-jssdk";
-    script.src = "https://connect.facebook.net/en_US/sdk.js";
-    script.async = true;
-    script.onload = () => {
-      window.fbAsyncInit = function () {
-        FB.init({
-          appId: APP_ID,
-          cookie: true,
-          xfbml: true,
-          version: "v16.0",
-        });
-  
-        FB.AppEvents.logPageView();
-      };
+    // Function to load Facebook SDK
+    const loadFacebookSDK = () => {
+        if (document.getElementById("facebook-jssdk")) return;
+
+        const script = document.createElement("script");
+        script.id = "facebook-jssdk";
+        script.src = "https://connect.facebook.net/en_US/sdk.js";
+        script.async = true;
+        script.onload = () => {
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: APP_ID,
+                    cookie: true,
+                    xfbml: true,
+                    version: "v16.0",
+                });
+
+                FB.AppEvents.logPageView();
+            };
+        };
+
+        document.head.appendChild(script);
     };
-  
-    document.head.appendChild(script);
-  
+
+    // Check if the window is already loaded
+    if (document.readyState === 'complete') {
+        loadFacebookSDK();
+    } else {
+        // If window is not loaded, wait for it to be fully loaded
+        window.onload = loadFacebookSDK;
+    }
+
     return () => {
-      // Cleanup if necessary
-      document.head.removeChild(script);
+        // Cleanup if necessary
+        const scriptElement = document.getElementById("facebook-jssdk");
+        if (scriptElement) {
+            scriptElement.remove();
+        }
     };
-  }, []);
-  
+}, []);
+
 
   useEffect(() => {
     if (fetchedUserInfo.userFacebookId && fetchedUserInfo.accessToken) {
