@@ -11,30 +11,58 @@ const Integration = () => {
   const { fetchedUserInfo, setFetchedUserInfo } = useUser(); // Use the useUser hook
 
   //loading facebook sdk
+  // useEffect(() => {
+  //   if (document.getElementById("facebook-jssdk")) return;
+
+  //   window.fbAsyncInit = function () {
+  //     FB.init({
+  //       appId: APP_ID,
+  //       cookie: true,
+  //       xfbml: true,
+  //       version: "v16.0",
+  //     });
+
+  //     FB.AppEvents.logPageView();
+  //   };
+
+  //   (function (d, s, id) {
+  //     var js,
+  //       fjs = d.getElementsByTagName(s)[0];
+  //     if (d.getElementById(id)) return;
+  //     js = d.createElement(s);
+  //     js.id = id;
+  //     js.src = "https://connect.facebook.net/en_US/sdk.js";
+  //     fjs.parentNode.insertBefore(js, fjs);
+  //   })(document, "script", "facebook-jssdk");
+  // }, []);
   useEffect(() => {
     if (document.getElementById("facebook-jssdk")) return;
-
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId: APP_ID,
-        cookie: true,
-        xfbml: true,
-        version: "v16.0",
-      });
-
-      FB.AppEvents.logPageView();
+  
+    const script = document.createElement("script");
+    script.id = "facebook-jssdk";
+    script.src = "https://connect.facebook.net/en_US/sdk.js";
+    script.async = true;
+    script.onload = () => {
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: APP_ID,
+          cookie: true,
+          xfbml: true,
+          version: "v16.0",
+        });
+  
+        FB.AppEvents.logPageView();
+      };
     };
-
-    (function (d, s, id) {
-      var js,
-        fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s);
-      js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, "script", "facebook-jssdk");
+  
+    document.head.appendChild(script);
+  
+    return () => {
+      // Cleanup if necessary
+      document.head.removeChild(script);
+    };
   }, []);
+  
 
   useEffect(() => {
     if (fetchedUserInfo.userFacebookId && fetchedUserInfo.accessToken) {
