@@ -42,8 +42,8 @@ const Integration = () => {
       window.fbAsyncInit = function () {
         FB.init({
           appId: APP_ID,
-          cookie: true,
-          xfbml: true,
+          cookie: false,
+          xfbml: false,
           version: "v16.0",
         });
   
