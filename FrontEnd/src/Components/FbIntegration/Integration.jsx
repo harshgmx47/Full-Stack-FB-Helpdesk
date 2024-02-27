@@ -36,49 +36,46 @@ const Integration = () => {
   //   })(document, "script", "facebook-jssdk");
   // }, []);
   useEffect(() => {
-    // Function to load Facebook SDK
     const loadFacebookSDK = () => {
-        if (document.getElementById("facebook-jssdk")) return;
-
-        const script = document.createElement("script");
-        script.id = "facebook-jssdk";
-        script.src = "https://connect.facebook.net/en_US/sdk.js";
-        script.defer = true;
-        script.crossorigin = "anonymous";
-        script.async = true;
-        script.onload = () => {
-            window.fbAsyncInit = function () {
-                FB.init({
-                    appId: APP_ID,
-                    cookie: true,
-                    xfbml: true,
-                    version: "v16.0",
-                });
-
-                FB.AppEvents.logPageView();
-            };
-        };
-
-        document.head.appendChild(script);
+      if (window.FB) return; // Facebook SDK is already loaded
+  
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: APP_ID,
+          cookie: true,
+          xfbml: true,
+          version: "v16.0",
+        });
+  
+        FB.AppEvents.logPageView();
+      };
+  
+      // Load Facebook SDK
+      (function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        js.crossorigin = "anonymous"; // Add crossorigin attribute
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
     };
-
-    // Check if the window is already loaded
-    if (document.readyState === 'complete') {
-        loadFacebookSDK();
+  
+    // Check if the Facebook SDK script element already exists
+    if (!document.getElementById("facebook-jssdk")) {
+      loadFacebookSDK();
     } else {
-        // If window is not loaded, wait for it to be fully loaded
-        window.onload = loadFacebookSDK;
+      // Facebook SDK script element already exists, but FB object might not be initialized
+      if (!window.FB) {
+        // Load local copy or handle the fallback logic here
+        console.log("Fallback to local copy or handle fallback logic");
+      }
     }
-
-    return () => {
-        // Cleanup if necessary
-        const scriptElement = document.getElementById("facebook-jssdk");
-        if (scriptElement) {
-            scriptElement.remove();
-        }
-    };
-}, []);
-
+  }, []);
+  
+  
 
   useEffect(() => {
     if (fetchedUserInfo.userFacebookId && fetchedUserInfo.accessToken) {
