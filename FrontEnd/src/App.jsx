@@ -7,8 +7,8 @@ import "./App.css";
 const App = () => {
   return (
     <div className="appComponent">
-      <BrowserRouter>
           <UserProvider> {/* Wrap only the relevant components with UserProvider */}
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Signup />} />
           <Route path="/login" element={<Login />} />
@@ -16,8 +16,8 @@ const App = () => {
           <Route path="/pages/:pageId" element={<Messenger />} />
           <Route path="/pages" element={<Pages />} />
         </Routes>
-          </UserProvider> 
       </BrowserRouter>
+          </UserProvider> 
     </div>
   );
 };
