@@ -14,6 +14,12 @@ const cors = require("cors");
 app.use(bodyParser.json());
 app.use(cors());
 
+// Set Content Security Policy header
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "upgrade-insecure-requests");
+  next();
+});
+
 app.get("/", (req, res) => {
   res.send("test");
 });
