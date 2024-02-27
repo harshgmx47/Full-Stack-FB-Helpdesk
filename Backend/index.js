@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
+  res.setHeader("access-control-allow-credentials")
   res.send("test");
 });
 
