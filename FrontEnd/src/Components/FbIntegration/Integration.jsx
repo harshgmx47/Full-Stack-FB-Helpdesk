@@ -48,6 +48,8 @@ const Integration = () => {
         });
   
         FB.AppEvents.logPageView();
+         // Parse XFBML elements to render Facebook plugins
+      FB.XFBML.parse();
       };
   
       // Load Facebook SDK
