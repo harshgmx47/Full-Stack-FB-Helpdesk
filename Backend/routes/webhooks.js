@@ -62,11 +62,19 @@ router.post('/', (req, res) => {
 
 // Function to save incoming message to the database
 async function saveMessage(webhookEvent) {
+    let senderType;
+    // Check if the sender ID is the same as the page ID
+    if (webhookEvent.sender.id === webhookEvent.recipient.id) {
+        senderType = 'agent';
+    } else {
+        senderType = 'user';
+    }
     const newMessage = new Message({
       fbConversationId: webhookEvent.sender.id,
       messageId: webhookEvent.message.mid,
       messageContent: webhookEvent.message.text,
       senderId: webhookEvent.sender.id,
+      senderType :senderType,
       timestamp: new Date(webhookEvent.timestamp),
     });
   
