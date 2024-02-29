@@ -24,6 +24,7 @@ router.get('/', (req, res) => {
 // Webhook callback endpoint
 router.post('/', (req, res) => {
     let body = req.body;
+    console.log(body.object);
 
     if (body.object === 'page') {
         body.entry.forEach(entry => {
