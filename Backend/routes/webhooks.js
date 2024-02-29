@@ -39,18 +39,18 @@ router.post('/', (req, res) => {
                 handleMessage(senderPsid, webhookEvent.message);
             } else if (webhookEvent.postback) {
                 handlePostback(senderPsid, webhookEvent.postback);
+            }     // Process incoming messages
+            if (webhookEvent.message && webhookEvent.sender) {
+              saveMessage(webhookEvent)
+                .then(() => {
+                  console.log("Message saved successfully");
+                })
+                .catch((error) => {
+                  console.error("Error saving message:", error);
+                });
             }
         });
-        // Process incoming messages
-      if (webhookEvent.message && webhookEvent.sender) {
-        saveMessage(webhookEvent)
-          .then(() => {
-            console.log("Message saved successfully");
-          })
-          .catch((error) => {
-            console.error("Error saving message:", error);
-          });
-      }
+    
 
 
         res.status(200).send('EVENT_RECEIVED');
