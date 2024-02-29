@@ -1,14 +1,12 @@
-require("dotenv").config();
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const request = require('request');
+const axios = require('axios');
 
 router.use(bodyParser.json());
 
 // Webhook verification endpoint
 router.get('/', (req, res) => {
-
     const VERIFY_TOKEN = "WEBHOOK_VERIFY_TOKEN";
 
     let mode = req.query['hub.mode'];
@@ -41,7 +39,8 @@ router.post('/', (req, res) => {
             } else if (webhookEvent.postback) {
                 handlePostback(senderPsid, webhookEvent.postback);
             }
-            // Process incoming messages
+        });
+        // Process incoming messages
       if (webhookEvent.message && webhookEvent.sender) {
         saveMessage(webhookEvent)
           .then(() => {
@@ -51,13 +50,14 @@ router.post('/', (req, res) => {
             console.error("Error saving message:", error);
           });
       }
-        });
+
 
         res.status(200).send('EVENT_RECEIVED');
     } else {
         res.sendStatus(404);
     }
 });
+
 // Function to save incoming message to the database
 async function saveMessage(webhookEvent) {
     const newMessage = new Message({
@@ -102,7 +102,7 @@ function handlePostback(senderPsid, receivedPostback) {
 }
 
 // Send response messages via the Send API
-function callSendAPI(senderPsid, response) {
+async function callSendAPI(senderPsid, response) {
     let requestBody = {
         'recipient': {
             'id': senderPsid
@@ -110,18 +110,14 @@ function callSendAPI(senderPsid, response) {
         'message': response
     };
 
-    request({
-        'uri': 'https://graph.facebook.com/v2.6/me/messages',
-        'qs': { 'access_token': process.env.FACEBOOK_PAGE_ACCESS_TOKEN },
-        'method': 'POST',
-        'json': requestBody
-    }, (err, res, body) => {
-        if (!err && res.statusCode === 200) {
-            console.log('Message sent successfully');
-        } else {
-            console.error('Unable to send message:', err);
-        }
-    });
+    try {
+        await axios.post('https://graph.facebook.com/v2.6/me/messages', requestBody, {
+            params: { 'access_token': 'EAAPaHpxKGREBO8AdmphWwoZCVKQs3GwKeCxCODZAqid27D1HXK3lOlF9deAOy104iz8naXX7zYQt7hNNEl3xOEtnwDZBW5cTz0NPXbczT7AjLm0fETHFGbyzkHrLXvknEInY0Qpfzx8PN0QeZCAjaCmRrofclHSL6We9UFor2Sh7aGdQNoHAoxI62y6mTlqYaragYvqB' }
+        });
+        console.log('Message sent successfully');
+    } catch (error) {
+        console.error('Unable to send message:', error.message);
+    }
 }
 
 module.exports = router;
