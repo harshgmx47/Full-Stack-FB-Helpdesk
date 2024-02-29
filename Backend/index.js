@@ -26,7 +26,7 @@ app.use("/user", userRoutes);
 app.use("/userFacebook", userFacebook);
 app.use("/pages", pagesRouter);
 app.use("/conversations", conversationRoutes);
-app.use("/", webHookRouter);
+app.use("/webhook", webHookRouter);
 
 //database connection
 // connectDb();
