@@ -17,7 +17,7 @@ router.get("/:conversationId/messages", authenticateUser, async (req, res) => {
     if (messages.length === 0) {
       res.json({ message: "No messages found" });
     }
-    console.log(messages);
+    // console.log(messages);
     res.json(messages);
   } catch (error) {
     console.error("Error fetching messages:", error);
