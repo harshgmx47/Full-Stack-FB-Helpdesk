@@ -1,10 +1,11 @@
+/* Base styles */
 .signup-container {
-  width: 27%;
+  width: 25%;
   margin: auto;
   padding: 2rem 2.4rem;
-  background-color: #f0f0f0; 
-  border-radius: 8px; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .signup-form h2 {
@@ -42,7 +43,7 @@
 .signup-form button {
   width: 100%;
   padding: 10px;
-  background-color: #007bff; 
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
@@ -58,5 +59,24 @@
 
 .signup-form .login-link a {
   text-decoration: none;
-  color: #007bff; 
+  color: #007bff;
+}
+
+/* Media queries for responsiveness */
+@media only screen and (max-width: 768px) {
+  .signup-container {
+    width: 80%; /* Adjust width for small devices */
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .signup-container {
+    width: 20%; /* Adjust width for medium devices */
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .signup-container {
+    width: 30%; /* Adjust width for large devices */
+  }
 }
